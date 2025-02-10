@@ -20,6 +20,4 @@ public class User extends TimeBaseEntity {
 	private String name;
 
 	private Role role;
-
-
 }
