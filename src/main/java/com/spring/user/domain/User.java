@@ -1,12 +1,9 @@
 package com.spring.user.domain;
 
 import com.spring.common.domain.TimeBaseEntity;
+import jakarta.persistence.*;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-
+@Table(name = "tb_user")
 @Entity(name = "UserEntity")
 public class User extends TimeBaseEntity {
 
