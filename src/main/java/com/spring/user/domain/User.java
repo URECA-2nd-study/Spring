@@ -22,5 +22,10 @@ public class User extends TimeBaseEntity {
 
 	@Enumerated(EnumType.STRING)
 	private Role role;
+
+	public User(String email, String name) {
+		this.email = email;
+		this.name = name;
+	}
 }
 
