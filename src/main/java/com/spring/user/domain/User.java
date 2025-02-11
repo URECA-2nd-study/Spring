@@ -2,9 +2,13 @@ package com.spring.user.domain;
 
 import com.spring.common.domain.TimeBaseEntity;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
+@Entity
+@Getter
 @Table(name = "tb_user")
-@Entity(name = "UserEntity")
+@NoArgsConstructor
 public class User extends TimeBaseEntity {
 
 	@Id
@@ -16,5 +20,7 @@ public class User extends TimeBaseEntity {
 
 	private String name;
 
+	@Enumerated(EnumType.STRING)
 	private Role role;
 }
+
