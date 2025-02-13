@@ -1,5 +1,10 @@
 package com.spring.user.domain;
 
+import java.util.Arrays;
+
+import com.spring.common.exception.runtime.BaseException;
+import com.spring.user.exception.UserErrorCode;
+
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
@@ -11,4 +16,11 @@ public enum Role {
 	MEMBER("일반회원");
 
 	private final String role;
+
+	public static Role of(String role) {
+		return Arrays.stream(values())
+			.filter(r -> r.equals(role))
+			.findAny()
+			.orElseThrow(() -> new BaseException(UserErrorCode.INVALID_ROLE));
+	}
 }
