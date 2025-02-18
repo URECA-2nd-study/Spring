@@ -65,4 +65,10 @@ public class UserMapper {
 
 		return response;
 	}
+
+	public static FilterUserResponse toFilterUserResponse(List<User> filteredUser){
+		return new FilterUserResponse(
+				toSimpleUserResponses(filteredUser)
+		);
+	}
 }

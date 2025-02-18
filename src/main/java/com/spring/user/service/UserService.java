@@ -1,5 +1,6 @@
 package com.spring.user.service;
 
+import com.spring.user.domain.Role;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -63,6 +64,12 @@ public class UserService {
 
 		userRepository.delete(findUser);
 		return UserMapper.toDeleteUserResponse();
+	}
+
+	@Transactional(readOnly = true)
+	public List<SimpleUserResponse> filterUserByRole(Role role){
+		List<User> filteredUser = userRepository.findAllByRole(role);
+		return UserMapper.toSimpleUserResponses(filteredUser);
 	}
 
 	private User findUser(Long userId) {
