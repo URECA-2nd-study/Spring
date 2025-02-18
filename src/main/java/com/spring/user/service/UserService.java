@@ -2,6 +2,7 @@ package com.spring.user.service;
 
 import java.util.List;
 
+import com.spring.user.dto.request.UserFilterSearchRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,6 +38,12 @@ public class UserService {
 		List<User> findUserAll = userRepository.findAll();
 
 		return UserMapper.toSimpleUserResponses(findUserAll);
+	}
+
+	//필터링 검색
+	@Transactional
+	public List<User> getUserFilter(UserFilterSearchRequest request){
+		return userRepository.searchUsers(request);
 	}
 
 	@Transactional

@@ -8,6 +8,7 @@ import com.spring.user.exception.UserErrorCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+
 @Getter
 @RequiredArgsConstructor
 public enum Role {
@@ -19,8 +20,8 @@ public enum Role {
 
 	public static Role of(String role) {
 		return Arrays.stream(values())
-			.filter(r -> r.equals(role))
-			.findAny()
-			.orElseThrow(() -> new BaseException(UserErrorCode.INVALID_ROLE));
+				.filter(r -> r.role.equals(role))
+				.findAny()
+				.orElseThrow(() -> new BaseException(UserErrorCode.INVALID_ROLE));
 	}
 }
