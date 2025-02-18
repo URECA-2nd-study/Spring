@@ -2,12 +2,10 @@ package com.spring.user.service;
 
 import java.util.List;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.common.exception.runtime.BaseException;
-import com.spring.user.dto.request.DeleteUserRequest;
 import com.spring.user.dto.request.RegisterUserRequest;
 import com.spring.user.dto.request.UpdateUserRequest;
 import com.spring.user.dto.request.SimpleUserRequest;
@@ -26,7 +24,6 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
 
 	private final UserRepository userRepository;
-	private final PasswordEncoder passwordEncoder;
 
 	@Transactional(readOnly = true)
 	public SimpleUserResponse getUser(SimpleUserRequest request) {
@@ -44,7 +41,7 @@ public class UserService {
 
 	@Transactional
 	public RegisterUserResponse joinUser(RegisterUserRequest request) {
-		User savedUser = userRepository.save(UserMapper.toUser(request, passwordEncoder));
+		User savedUser = userRepository.save(UserMapper.toUser(request));
 
 		return UserMapper.toRegisterUserResponse(savedUser);
 	}

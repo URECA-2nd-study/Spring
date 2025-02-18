@@ -3,8 +3,6 @@ package com.spring.user.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-
 import com.spring.user.domain.Role;
 import com.spring.user.dto.request.RegisterUserRequest;
 import com.spring.user.dto.request.SimpleUserRequest;
@@ -32,10 +30,10 @@ public class UserMapper {
 		);
 	}
 
-	public static User toUser(RegisterUserRequest request, PasswordEncoder passwordEncoder) {
+	public static User toUser(RegisterUserRequest request) {
 		return User.of(
 			request.email(),
-			passwordEncoder.encode(request.password()),
+			request.password(),
 			request.name(),
 			Role.MEMBER
 		);
