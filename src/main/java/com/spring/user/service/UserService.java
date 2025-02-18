@@ -2,6 +2,8 @@ package com.spring.user.service;
 
 import java.util.List;
 
+import com.spring.user.domain.Role;
+import com.spring.user.repository.CustomUserRepositoryImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,5 +77,14 @@ public class UserService {
 		if(userRepository.existsByEmail(changingEmail)) {
 			throw new BaseException(UserErrorCode.DUPLICATED_EMAIL);
 		}
+	}
+
+	@Transactional(readOnly = true)
+	public List<SimpleUserResponse> getUserByFilter(Role role) {
+		List<User> findUserAll = userRepository.findAllByRole(role);
+
+		return UserMapper.toSimpleUserResponses(findUserAll);
+
+
 	}
 }
