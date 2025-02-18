@@ -79,12 +79,6 @@ public class UserService {
 	}
 
 	public List<SimpleUserResponse> getFilteredUsers(FilteredUsersRequest request) {
-		List<SimpleUserResponse> responses = userRepository.getFilteredUsers(request.role());
-
-		if(responses.isEmpty()) {
-			throw new BaseException(UserErrorCode.NOT_FOUND_FILTERED_USER);
-		}
-
-		return responses;
+		return userRepository.getFilteredUsers(request.role());
 	}
 }
