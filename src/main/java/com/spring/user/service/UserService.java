@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.common.exception.runtime.BaseException;
+import com.spring.user.dto.request.FilteredUsersRequest;
 import com.spring.user.dto.request.RegisterUserRequest;
 import com.spring.user.dto.request.UpdateUserRequest;
 import com.spring.user.dto.request.SimpleUserRequest;
@@ -75,5 +76,15 @@ public class UserService {
 		if(userRepository.existsByEmail(changingEmail)) {
 			throw new BaseException(UserErrorCode.DUPLICATED_EMAIL);
 		}
+	}
+
+	public List<SimpleUserResponse> getFilteredUsers(FilteredUsersRequest request) {
+		List<SimpleUserResponse> responses = userRepository.getFilteredUsers(request.role());
+
+		if(responses.isEmpty()) {
+			throw new BaseException(UserErrorCode.NOT_FOUND_FILTERED_USER);
+		}
+
+		return responses;
 	}
 }
