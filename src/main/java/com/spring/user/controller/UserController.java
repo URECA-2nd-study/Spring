@@ -29,6 +29,7 @@ public class UserController {
 
 	private final UserService userService;
 
+
 	// 유저 단건 조회
 	@GetMapping("/{userId}")
 	public ResponseEntity<SimpleUserResponse> getUser(@PathVariable("userId") Long userId) {
@@ -44,6 +45,10 @@ public class UserController {
 
 		return ResponseEntity.ok(response);
 	}
+
+	//유저 필터링 다건 조회
+
+
 
 	// 유저 등록
 	@PostMapping("/")
