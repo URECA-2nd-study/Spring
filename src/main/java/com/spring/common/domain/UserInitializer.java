@@ -23,9 +23,9 @@ public class UserInitializer implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        if (userRepository.count() == 0) {
-            userRepository.saveAll(createAdminUsers());
-            userRepository.saveAll(createMemberUsers());
+        if (!userRepository.exists()) {
+            userRepository.batchInsert(createAdminUsers());
+            userRepository.batchInsert(createMemberUsers());
         }
     }
 
