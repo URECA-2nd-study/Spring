@@ -10,14 +10,14 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
 @Component
-public class DataInitializer implements ApplicationRunner {
+public class UserInitializer implements ApplicationRunner {
 
     private static final int ADMIN_CNT = 10;
     private static final int MEMBER_CNT = 10;
 
     private final UserRepository userRepository;
 
-    public DataInitializer(UserRepository userRepository) {
+    public UserInitializer(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
