@@ -46,7 +46,7 @@ public class User extends TimeBaseEntity {
 		this.email = email;
 		this.password = password;
 		this.name = name;
-		this.role =role;
+		this.role = role;
 	}
 
 	public static User of(String email, String password, String name, Role role) {
