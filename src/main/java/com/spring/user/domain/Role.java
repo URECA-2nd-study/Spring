@@ -18,6 +18,8 @@ public enum Role {
 	private final String role;
 
 	public static Role of(String role) {
+		if (role == null) return null;
+
 		return Arrays.stream(values())
 				.filter(r -> r.role.equals(role))
 				.findAny()

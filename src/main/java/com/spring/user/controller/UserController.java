@@ -77,8 +77,6 @@ public class UserController {
 	@GetMapping("/filter")
 	public ResponseEntity<List<SimpleUserResponse>> filterUserByRole(
 			@RequestParam(required = false) String role) {
-		System.out.println(role);
-
 		List<SimpleUserResponse> response = userService.findAllUsersByRole(role);
 
 		return ResponseEntity.ok(response);
