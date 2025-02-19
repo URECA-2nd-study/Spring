@@ -75,9 +75,9 @@ public class UserController {
 
 	// 역할로 유저 다건(전체) 조회
 	@GetMapping("/filter")
-	public ResponseEntity<List<SimpleUserResponse>> filterUserByRole(
+	public ResponseEntity<List<SimpleUserResponse>> findUserByRole(
 			@RequestParam(required = false) String role) {
-		List<SimpleUserResponse> response = userService.findAllUsersByRole(role);
+		List<SimpleUserResponse> response = userService.findUserByRole(role);
 
 		return ResponseEntity.ok(response);
 	}
