@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.user.dto.request.RegisterUserRequest;
@@ -68,6 +69,15 @@ public class UserController {
 	public ResponseEntity<DeleteUserResponse> deleteUser(
 		@PathVariable("userId") Long userId) {
 		DeleteUserResponse response = userService.deleteUser(userId);
+
+		return ResponseEntity.ok(response);
+	}
+
+	// 역할로 유저 다건(전체) 조회
+	@GetMapping("/filter")
+	public ResponseEntity<List<SimpleUserResponse>> findUserByRole(
+			@RequestParam(required = false) String role) {
+		List<SimpleUserResponse> response = userService.findUserByRole(role);
 
 		return ResponseEntity.ok(response);
 	}

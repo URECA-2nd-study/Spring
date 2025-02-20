@@ -18,9 +18,11 @@ public enum Role {
 	private final String role;
 
 	public static Role of(String role) {
+		if (role == null) return null;
+
 		return Arrays.stream(values())
-			.filter(r -> r.equals(role))
-			.findAny()
-			.orElseThrow(() -> new BaseException(UserErrorCode.INVALID_ROLE));
+				.filter(r -> r.role.equals(role))
+				.findAny()
+				.orElseThrow(() -> new BaseException(UserErrorCode.INVALID_ROLE));
 	}
 }

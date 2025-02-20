@@ -1,5 +1,6 @@
 package com.spring.user.service;
 
+import com.spring.user.domain.Role;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -76,4 +77,12 @@ public class UserService {
 			throw new BaseException(UserErrorCode.DUPLICATED_EMAIL);
 		}
 	}
+
+	public List<SimpleUserResponse> findUserByRole(String role) {
+		List<User> users = userRepository.findUserByRole(Role.of(role));
+
+		return UserMapper.toSimpleUserResponses(users);
+	}
+
+
 }
