@@ -1,22 +1,23 @@
 package com.spring.user.service;
 
-import com.spring.common.exception.runtime.BaseException;
-import com.spring.user.domain.Role;
-import com.spring.user.domain.User;
-import com.spring.user.dto.UserMapper;
-import com.spring.user.dto.request.RegisterUserRequest;
-import com.spring.user.dto.request.SimpleUserRequest;
-import com.spring.user.dto.request.UpdateUserRequest;
-import com.spring.user.dto.response.DeleteUserResponse;
-import com.spring.user.dto.response.RegisterUserResponse;
-import com.spring.user.dto.response.SimpleUserResponse;
-import com.spring.user.exception.UserErrorCode;
-import com.spring.user.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import com.spring.common.exception.runtime.BaseException;
+import com.spring.user.dto.request.RegisterUserRequest;
+import com.spring.user.dto.request.UpdateUserRequest;
+import com.spring.user.dto.request.SimpleUserRequest;
+import com.spring.user.dto.response.DeleteUserResponse;
+import com.spring.user.dto.response.RegisterUserResponse;
+import com.spring.user.dto.response.SimpleUserResponse;
+import com.spring.user.domain.User;
+import com.spring.user.dto.UserMapper;
+import com.spring.user.exception.UserErrorCode;
+import com.spring.user.repository.UserRepository;
+
+import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
@@ -74,14 +75,5 @@ public class UserService {
 		if(userRepository.existsByEmail(changingEmail)) {
 			throw new BaseException(UserErrorCode.DUPLICATED_EMAIL);
 		}
-	}
-
-	@Transactional(readOnly = true)
-	public List<SimpleUserResponse> getUserByFilter(Role role) {
-		List<User> findUserAll = userRepository.findAllByRole(role);
-
-		return UserMapper.toSimpleUserResponses(findUserAll);
-
-
 	}
 }

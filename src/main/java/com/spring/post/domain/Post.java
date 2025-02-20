@@ -21,14 +21,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "tb_post")
+@Table(name = "Post")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Post extends TimeBaseEntity {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
+	@Column(name = "post_id")
 	private Long id;
 
 	@Column(name = "title", nullable = false)
@@ -38,7 +38,7 @@ public class Post extends TimeBaseEntity {
 	private String content;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id",
+	@JoinColumn(name = "userId",
 		nullable = false,
 		foreignKey = @ForeignKey(NO_CONSTRAINT))
 	private User user;
