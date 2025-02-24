@@ -47,7 +47,7 @@ public class UserServiceTest {
 
 		userRepository.saveAll(List.of(김테스트1, 김테스트2, 김테스트3, 김테스트4, 김테스트5, 김테스트6, 김테스트7, 김테스트8));
 
-		FilteredUsersRequest request = new FilteredUsersRequest("어드민 ");
+		FilteredUsersRequest request = new FilteredUsersRequest("어드민");
 
 		// when
 		List<SimpleUserResponse> responses = userService.getFilteredUsers(request);
