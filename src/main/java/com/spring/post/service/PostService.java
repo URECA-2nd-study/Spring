@@ -13,6 +13,7 @@ import com.spring.post.dto.request.SimplePostRequest;
 import com.spring.post.dto.request.RegisterPostRequest;
 import com.spring.post.dto.request.UpdatePostRequest;
 import com.spring.post.dto.response.DeletePostResponse;
+import com.spring.post.dto.response.NoOffsetPostResponse;
 import com.spring.post.dto.response.SimplePostResponse;
 import com.spring.post.exception.PostErrorCode;
 import com.spring.post.repository.PostRepository;
@@ -91,5 +92,9 @@ public class PostService {
 		return postRepository.findById(postId).orElseThrow(
 			() -> new BaseException(PostErrorCode.NOT_FOUND_POST)
 		);
+	}
+
+	public NoOffsetPostResponse getPostsWithNoOffset(Long lastPostId) {
+		return postRepository.paginationPostWithNoOffset(lastPostId);
 	}
 }
