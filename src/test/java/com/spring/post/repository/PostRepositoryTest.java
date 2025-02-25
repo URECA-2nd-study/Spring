@@ -12,7 +12,7 @@ import javax.swing.text.html.parser.Entity;
 @SpringBootTest
 @Transactional
 public class PostRepositoryTest {
-    
+
     //mockito를 이용한 서비스, 컨트롤러 작성
     @BeforeEach
     public void before(){
