@@ -2,6 +2,9 @@ package com.spring.post.service;
 
 import java.util.List;
 
+import com.spring.post.dto.response.PagePostResponse;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +45,14 @@ public class PostService {
 		List<Post> posts = postRepository.findAll();
 
 		return PostMapper.toSimplePostResponses(posts);
+	}
+
+	@Transactional
+	public PagePostResponse getPostbyPage(Long cursorId, Pageable pageable){
+		Slice<Post> slice = postRepository.findAllbyId(cursorId,pageable);
+		List<SimplePostResponse> postResponses = PostMapper.toSimplePostResponses(slice.getContent());
+
+		return new PagePostResponse(postResponses, slice.hasNext());
 	}
 
 	@Transactional

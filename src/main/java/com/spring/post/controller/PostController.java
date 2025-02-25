@@ -2,15 +2,11 @@ package com.spring.post.controller;
 
 import java.util.List;
 
+import com.spring.post.dto.response.PagePostResponse;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.spring.post.dto.PostMapper;
 import com.spring.post.dto.request.DeletePostRequest;
@@ -41,6 +37,17 @@ public class PostController {
 		List<SimplePostResponse> response = postService.getPostAll();
 
 		return ResponseEntity.ok(response);
+	}
+
+	@GetMapping("/page")
+	public ResponseEntity<PagePostResponse> getPostbyPage(
+			@RequestParam(value = "cursorId", required = false) Long cursorId,
+			@PageableDefault(size=5)Pageable pageable
+			){
+
+		PagePostResponse response = postService.getPostbyPage(cursorId, pageable);
+		return ResponseEntity.ok(response);
+
 	}
 
 	@PostMapping("/")

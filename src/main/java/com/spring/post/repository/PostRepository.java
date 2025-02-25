@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.spring.post.domain.Post;
 
 @Repository
-public interface PostRepository extends JpaRepository<Post, Long> {
+public interface PostRepository extends JpaRepository<Post, Long>,PostCustomRepository {
 
 	@Query("SELECT p FROM Post p JOIN FETCH p.user")
 	List<Post> findAll();
