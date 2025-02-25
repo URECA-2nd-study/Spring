@@ -1,26 +1,26 @@
 package com.spring.post.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.spring.common.exception.runtime.BaseException;
 import com.spring.post.domain.Post;
 import com.spring.post.dto.PostMapper;
 import com.spring.post.dto.request.DeletePostRequest;
-import com.spring.post.dto.request.SimplePostRequest;
 import com.spring.post.dto.request.RegisterPostRequest;
+import com.spring.post.dto.request.SimplePostRequest;
 import com.spring.post.dto.request.UpdatePostRequest;
 import com.spring.post.dto.response.DeletePostResponse;
+import com.spring.post.dto.response.PagePostResponse;
 import com.spring.post.dto.response.SimplePostResponse;
 import com.spring.post.exception.PostErrorCode;
 import com.spring.post.repository.PostRepository;
 import com.spring.user.domain.User;
 import com.spring.user.exception.UserErrorCode;
 import com.spring.user.repository.UserRepository;
-
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -73,6 +73,10 @@ public class PostService {
 		postRepository.delete(findPost);
 
 		return PostMapper.toDeletePostResponse();
+	}
+
+	public Slice<PagePostResponse> searchPostPageBasic(Long postId, Pageable pageable) {
+		return postRepository.searchPostPageBasic(postId, pageable);
 	}
 
 	private void validateAuthor(User author, Long userId) {

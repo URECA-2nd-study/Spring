@@ -1,5 +1,6 @@
 package com.spring.post.dto;
 
+import com.spring.post.dto.response.PagePostResponse;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,12 +37,28 @@ public class PostMapper {
 		List<SimplePostResponse> response = new ArrayList<>();
 
 		posts.stream().forEach(
-			post -> response.add(new SimplePostResponse(
-				post.getId(),
-				post.getTitle(),
-				post.getContent(),
-				post.getUser().getName()
-			))
+				post -> response.add(new SimplePostResponse(
+						post.getId(),
+						post.getTitle(),
+						post.getContent(),
+						post.getUser().getName()
+				))
+		);
+
+		return response;
+	}
+
+	public static List<PagePostResponse> toPagePostResponses(List<Post> posts, Long lastPostId) {
+		List<PagePostResponse> response = new ArrayList<>();
+
+		posts.stream().forEach(
+				post -> response.add(new PagePostResponse(
+						post.getId(),
+						lastPostId,
+						post.getTitle(),
+						post.getContent(),
+						post.getUser().getName()
+				))
 		);
 
 		return response;
