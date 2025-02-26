@@ -19,4 +19,8 @@ public class UserFixtures {
         }
         return users;
     }
+
+    public static User createUser() {
+        return User.of("abc@naver.com", "abc1234", "ABC", Role.MEMBER);
+    }
 }
