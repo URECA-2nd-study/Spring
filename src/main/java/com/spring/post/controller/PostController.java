@@ -11,7 +11,6 @@ import com.spring.post.service.PostService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -70,10 +69,10 @@ public class PostController {
 	}
 
 	@GetMapping("/paging")
-	public ResponseEntity<Slice<PagePostResponse>> getPostByPaging(
+	public ResponseEntity<PagePostResponse> getPostByPagination(
 			Pageable pageable,
 			@RequestParam(required = false) Long postId) {
-		Slice<PagePostResponse> response = postService.searchPostPageBasic(postId, pageable);
+		PagePostResponse response = postService.searchPostByPagination(postId, pageable);
 
 		return ResponseEntity.ok(response);
 	}

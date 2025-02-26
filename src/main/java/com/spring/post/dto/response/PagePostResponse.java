@@ -1,11 +1,10 @@
 package com.spring.post.dto.response;
 
+import org.springframework.data.domain.Slice;
+
 public record PagePostResponse (
 
-        Long postId,
-        Long lastPostId,
-        String title,
-        String content,
-        String author
+    Slice<SimplePostResponse> slice,
+    Long lastPostId
 ) {
 }

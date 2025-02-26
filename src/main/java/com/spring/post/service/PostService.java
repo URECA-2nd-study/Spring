@@ -18,7 +18,6 @@ import com.spring.user.repository.UserRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,8 +74,8 @@ public class PostService {
 		return PostMapper.toDeletePostResponse();
 	}
 
-	public Slice<PagePostResponse> searchPostPageBasic(Long postId, Pageable pageable) {
-		return postRepository.searchPostPageBasic(postId, pageable);
+	public PagePostResponse searchPostByPagination(Long postId, Pageable pageable) {
+		return postRepository.searchPostByPagination(postId, pageable);
 	}
 
 	private void validateAuthor(User author, Long userId) {
