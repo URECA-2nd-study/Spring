@@ -1,26 +1,26 @@
 package com.spring.post.service;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.spring.common.exception.runtime.BaseException;
 import com.spring.post.domain.Post;
 import com.spring.post.dto.PostMapper;
 import com.spring.post.dto.request.DeletePostRequest;
-import com.spring.post.dto.request.SimplePostRequest;
 import com.spring.post.dto.request.RegisterPostRequest;
+import com.spring.post.dto.request.SimplePostRequest;
 import com.spring.post.dto.request.UpdatePostRequest;
 import com.spring.post.dto.response.DeletePostResponse;
+import com.spring.post.dto.response.SimplePostListResponse;
 import com.spring.post.dto.response.SimplePostResponse;
 import com.spring.post.exception.PostErrorCode;
 import com.spring.post.repository.PostRepository;
 import com.spring.user.domain.User;
 import com.spring.user.exception.UserErrorCode;
 import com.spring.user.repository.UserRepository;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -73,6 +73,14 @@ public class PostService {
 		postRepository.delete(findPost);
 
 		return PostMapper.toDeletePostResponse();
+	}
+
+	@Transactional(readOnly = true)
+	public SimplePostListResponse getPostWithPaging(Pageable pageable, Long lastPostId) {
+		List<Post> findPostAll = postRepository.findAllByPageable(pageable, lastPostId);
+		lastPostId = findPostAll.get(findPostAll.size()-1).getId();
+
+		return PostMapper.toSimplePostListResponse(findPostAll, lastPostId);
 	}
 
 	private void validateAuthor(User author, Long userId) {

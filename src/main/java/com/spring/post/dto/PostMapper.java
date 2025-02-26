@@ -1,16 +1,16 @@
 package com.spring.post.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.spring.post.domain.Post;
 import com.spring.post.dto.request.SimplePostRequest;
 import com.spring.post.dto.response.DeletePostResponse;
+import com.spring.post.dto.response.SimplePostListResponse;
 import com.spring.post.dto.response.SimplePostResponse;
 import com.spring.user.domain.User;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class PostMapper {
@@ -49,5 +49,12 @@ public class PostMapper {
 
 	public static DeletePostResponse toDeletePostResponse() {
 		return new DeletePostResponse(true);
+	}
+
+	public static SimplePostListResponse toSimplePostListResponse(List<Post> findPostPage, Long lastPostId) {
+		List<SimplePostResponse> postList = toSimplePostResponses(findPostPage);
+
+
+		return new SimplePostListResponse(postList, lastPostId);
 	}
 }
