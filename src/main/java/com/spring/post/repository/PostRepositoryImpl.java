@@ -30,7 +30,7 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Slice<SimplePostResponse> searchPageSimple(SimplePostRequest condition, Pageable pageable) {
+    public Slice<SimplePostResponse> searchPost(SimplePostRequest condition, Pageable pageable) {
         Long lastPostId = condition.postId();
 
         BooleanExpression whereCondition = (lastPostId != null) ? post.id.lt(lastPostId) : null;
@@ -44,13 +44,13 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
                 ))
                 .from(post)
                 .where(whereCondition)
-                .orderBy(post.id.desc()) // 최신순 정렬
-                .limit(pageable.getPageSize() + 1) // 다음 페이지 확인을 위해 limit +1
+                .orderBy(post.id.desc())
+                .limit(pageable.getPageSize() + 1)
                 .fetch();
 
         boolean hasNext = false;
         if (results.size() > pageable.getPageSize()) {
-            results.remove(pageable.getPageSize()); // 추가된 데이터 제거
+            results.remove(pageable.getPageSize());
             hasNext = true;
         }
 
