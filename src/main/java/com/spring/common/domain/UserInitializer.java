@@ -7,9 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 @Component
+@Order(0)
 public class UserInitializer implements ApplicationRunner {
 
     private static final int ADMIN_CNT = 10;
