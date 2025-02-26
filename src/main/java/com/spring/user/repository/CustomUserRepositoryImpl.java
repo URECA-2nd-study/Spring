@@ -17,6 +17,9 @@ public class CustomUserRepositoryImpl implements CustomUserRepository{
 
     private final JPAQueryFactory jpaQueryFactory;
 
+    /**
+     * 역할 별 필터링
+     */
     @Override
     public List<User> findAllByRole(Role role) {
         // null이면 전체 조회, 아니면 조건별 조회
