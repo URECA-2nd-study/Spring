@@ -12,6 +12,9 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.jdbc.core.BatchPreparedStatementSetter;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -21,6 +24,26 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     private final JPAQueryFactory queryFactory;
     private final JdbcTemplate jdbcTemplate;
 
+    @Override
+    public Slice<Post> findAllByPage(Long lastId, Pageable pageable) {
+        JPAQuery<Post> query = queryFactory
+                .selectFrom(post)
+                .leftJoin(post.user, user)
+                .fetchJoin()
+                .where(lastId == null ? null : post.id.lt(lastId))
+                .orderBy(post.id.desc())
+                .limit(pageable.getPageSize() + 1); // hasNext를 확인하기 위해 하나 더 조회
+
+        List<Post> result = query.fetch();
+
+        boolean hasNext = false;
+        if (result.size() > pageable.getPageSize()) {
+            result.remove(result.size() - 1); // hasNext 확인 후 마지막 요소 제거
+            hasNext = true;
+        }
+
+        return new SliceImpl<>(result, pageable, hasNext);
+    }
 
     @Override
     public boolean exists() {

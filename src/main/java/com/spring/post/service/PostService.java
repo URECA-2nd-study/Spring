@@ -1,7 +1,10 @@
 package com.spring.post.service;
 
+import com.spring.post.dto.response.GetPostPageResponse;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,6 +76,11 @@ public class PostService {
 		postRepository.delete(findPost);
 
 		return PostMapper.toDeletePostResponse();
+	}
+
+	public GetPostPageResponse getPostByPage(Long lastId, Pageable pageable){
+		Slice<Post> slicePost = postRepository.findAllByPage(lastId, pageable);
+		return PostMapper.toGetPostPageResponse(slicePost);
 	}
 
 	private void validateAuthor(User author, Long userId) {
