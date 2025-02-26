@@ -1,20 +1,19 @@
 package com.spring.user.controller;
 
-import java.util.List;
-
 import com.spring.user.domain.Role;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
+import com.spring.user.dto.UserMapper;
 import com.spring.user.dto.request.RegisterUserRequest;
 import com.spring.user.dto.request.UpdateUserRequest;
 import com.spring.user.dto.response.DeleteUserResponse;
 import com.spring.user.dto.response.RegisterUserResponse;
+import com.spring.user.dto.response.SimpleUserListResponse;
 import com.spring.user.dto.response.SimpleUserResponse;
-import com.spring.user.dto.UserMapper;
 import com.spring.user.service.UserService;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(("/api/user"))
@@ -68,9 +67,9 @@ public class UserController {
 
 	// 유저 다건(필터링) 조회
 	@GetMapping("/filter")
-	public ResponseEntity<List<SimpleUserResponse>> getUserByFilter(
+	public ResponseEntity<SimpleUserListResponse> getUserByFilter(
 		@RequestParam(required = false) Role role) {
-		List<SimpleUserResponse> response = userService.getUserByFilter(role);
+		SimpleUserListResponse response = userService.getUserByFilter(role);
 
 		return ResponseEntity.ok(response);
 	}

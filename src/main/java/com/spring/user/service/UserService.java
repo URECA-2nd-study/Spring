@@ -9,6 +9,7 @@ import com.spring.user.dto.request.SimpleUserRequest;
 import com.spring.user.dto.request.UpdateUserRequest;
 import com.spring.user.dto.response.DeleteUserResponse;
 import com.spring.user.dto.response.RegisterUserResponse;
+import com.spring.user.dto.response.SimpleUserListResponse;
 import com.spring.user.dto.response.SimpleUserResponse;
 import com.spring.user.exception.UserErrorCode;
 import com.spring.user.repository.UserRepository;
@@ -77,11 +78,9 @@ public class UserService {
 	}
 
 	@Transactional(readOnly = true)
-	public List<SimpleUserResponse> getUserByFilter(Role role) {
+	public SimpleUserListResponse getUserByFilter(Role role) {
 		List<User> findUserAll = userRepository.findAllByRole(role);
 
-		return UserMapper.toSimpleUserResponses(findUserAll);
-
-
+		return UserMapper.toSimpleUserListResponse(findUserAll);
 	}
 }

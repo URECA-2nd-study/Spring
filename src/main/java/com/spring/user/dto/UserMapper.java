@@ -8,6 +8,7 @@ import com.spring.user.dto.request.RegisterUserRequest;
 import com.spring.user.dto.request.SimpleUserRequest;
 import com.spring.user.dto.response.DeleteUserResponse;
 import com.spring.user.dto.response.RegisterUserResponse;
+import com.spring.user.dto.response.SimpleUserListResponse;
 import com.spring.user.dto.response.SimpleUserResponse;
 import com.spring.user.domain.User;
 
@@ -64,5 +65,11 @@ public class UserMapper {
 		);
 
 		return response;
+	}
+
+	public static SimpleUserListResponse toSimpleUserListResponse(List<User> findUserPage) {
+        List<SimpleUserResponse> userList = toSimpleUserResponses(findUserPage);
+
+        return new SimpleUserListResponse(userList);
 	}
 }
