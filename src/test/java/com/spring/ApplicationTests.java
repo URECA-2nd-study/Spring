@@ -11,3 +11,10 @@ class ApplicationTests {
 	}
 
 }
+/*
+postService.updatePost() -일반 단위테스트(선택)
+postService.updatePost() -with Mockito 단위테스트(필수)
+postController.updatePost() - 일반 통합테스트(필수)
+postService.updatePost() -with Mockito 통합테스트(필수)
+
+ */

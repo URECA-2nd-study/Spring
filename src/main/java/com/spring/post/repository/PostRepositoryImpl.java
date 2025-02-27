@@ -8,6 +8,7 @@ import com.spring.common.config.QuerydslConfig;
 import com.spring.post.domain.Post;
 import com.spring.post.domain.QPost;
 import com.spring.post.dto.request.SimplePostRequest;
+import com.spring.post.dto.request.UpdatePostRequest;
 import com.spring.post.dto.response.SimplePostResponse;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
@@ -30,17 +31,15 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Slice<SimplePostResponse> searchPost(SimplePostRequest condition, Pageable pageable) {
-        Long lastPostId = condition.postId();
-
+    public Slice<SimplePostResponse> searchPostPages(Long lastPostId, Pageable pageable) {
         BooleanExpression whereCondition = (lastPostId != null) ? post.id.lt(lastPostId) : null;
 
         List<SimplePostResponse> results = queryFactory
-                .select(Projections.constructor(SimplePostResponse.class,
+                .select(Projections.fields(SimplePostResponse.class,
                         post.id,
                         post.title,
                         post.content,
-                        post.createdAt
+                        post.user
                 ))
                 .from(post)
                 .where(whereCondition)
@@ -56,8 +55,6 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
 
         return new SliceImpl<>(results, pageable, hasNext);
     }
-
-
 
 
 }

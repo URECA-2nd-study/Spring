@@ -2,6 +2,8 @@ package com.spring.post.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -92,4 +94,9 @@ public class PostService {
 			() -> new BaseException(PostErrorCode.NOT_FOUND_POST)
 		);
 	}
+
+	public Slice<SimplePostResponse> getPostSlice(Long postId, Pageable pageable) {
+		return postRepository.searchPostPages(postId, pageable);
+	}
+
 }
