@@ -3,7 +3,7 @@ package com.spring.user.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import com.spring.common.config.QuerydslConfig;
+import com.spring.common.JpaConfig;
 import com.spring.common.exception.runtime.BaseException;
 import com.spring.common.fixture.UserFixture;
 import com.spring.user.domain.Role;
@@ -13,14 +13,9 @@ import java.util.List;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
 
-@DataJpaTest
-@Import(QuerydslConfig.class)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class UserRepositoryTest {
+
+class UserRepositoryTest extends JpaConfig {
 
     @Autowired
     private UserRepository userRepository;
@@ -33,7 +28,7 @@ class UserRepositoryTest {
         userRepository.save(user1);
 
         // when
-        List<User> users = userRepository.findUserByRole(Role.of(input));
+        List<User> users = userRepository.findAllUsersByRole(Role.of(input));
 
         // then
         assertThat(users).contains(user1);
