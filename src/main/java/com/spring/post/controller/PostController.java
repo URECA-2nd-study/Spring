@@ -67,7 +67,7 @@ public class PostController {
 	}
 
 
-	@GetMapping("/all")
+	@GetMapping
 	public ResponseEntity<Slice<SimplePostResponse>> getPostList(
 			@RequestParam(required = false) Long lastPostId,
 			@PageableDefault(size = 10) Pageable pageable) {
