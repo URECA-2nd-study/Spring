@@ -1,26 +1,19 @@
 package com.spring.user.controller;
 
-import java.util.List;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import com.spring.user.domain.Role;
+import com.spring.user.dto.UserMapper;
 import com.spring.user.dto.request.RegisterUserRequest;
 import com.spring.user.dto.request.UpdateUserRequest;
 import com.spring.user.dto.response.DeleteUserResponse;
 import com.spring.user.dto.response.RegisterUserResponse;
+import com.spring.user.dto.response.SimpleUserListResponse;
 import com.spring.user.dto.response.SimpleUserResponse;
-import com.spring.user.dto.UserMapper;
 import com.spring.user.service.UserService;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(("/api/user"))
@@ -68,6 +61,15 @@ public class UserController {
 	public ResponseEntity<DeleteUserResponse> deleteUser(
 		@PathVariable("userId") Long userId) {
 		DeleteUserResponse response = userService.deleteUser(userId);
+
+		return ResponseEntity.ok(response);
+	}
+
+	// 유저 다건(필터링) 조회
+	@GetMapping("/filter")
+	public ResponseEntity<SimpleUserListResponse> getUserByFilter(
+		@RequestParam(required = false) Role role) {
+		SimpleUserListResponse response = userService.getUserByFilter(role);
 
 		return ResponseEntity.ok(response);
 	}

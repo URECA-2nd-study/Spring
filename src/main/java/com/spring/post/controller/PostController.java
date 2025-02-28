@@ -1,26 +1,19 @@
 package com.spring.post.controller;
 
-import java.util.List;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.spring.post.dto.PostMapper;
 import com.spring.post.dto.request.DeletePostRequest;
 import com.spring.post.dto.request.RegisterPostRequest;
 import com.spring.post.dto.request.UpdatePostRequest;
 import com.spring.post.dto.response.DeletePostResponse;
+import com.spring.post.dto.response.SimplePostListResponse;
 import com.spring.post.dto.response.SimplePostResponse;
 import com.spring.post.service.PostService;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/post")
@@ -68,5 +61,14 @@ public class PostController {
 		return ResponseEntity.ok(response);
 	}
 
+	// 포스트 페이징 조회
+	@GetMapping("/paging")
+	public ResponseEntity<SimplePostListResponse> getUserWithPaging(
+		Pageable pageable,
+		@RequestParam(value = "lastPostId", required = false) Long lastPostId) {
+		SimplePostListResponse response = postService.getPostWithPaging(pageable, lastPostId);
+
+		return ResponseEntity.ok(response);
+	}
 
 }
