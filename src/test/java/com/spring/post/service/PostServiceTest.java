@@ -22,7 +22,7 @@ public class PostServiceTest {
     @Autowired private PostRepository postRepository;
 
     @Test
-    @DisplayName("포스트를 정상적으로 업데이트 할 수 있다.")
+    @DisplayName("포스트를 정상적으로 업데이트할 수 있다.")
     public void updatePostTest(){
         User user = userRepository.save(UserFixture.createUser("abc@abc.com", Role.ADMIN));
         Post post = postRepository.save(PostFixture.createPost("test title", user));
