@@ -1,14 +1,13 @@
 package com.spring.post.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.spring.post.domain.Post;
 import com.spring.post.dto.request.SimplePostRequest;
 import com.spring.post.dto.response.DeletePostResponse;
 import com.spring.post.dto.response.SimplePostResponse;
 import com.spring.user.domain.User;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -36,15 +35,29 @@ public class PostMapper {
 		List<SimplePostResponse> response = new ArrayList<>();
 
 		posts.stream().forEach(
-			post -> response.add(new SimplePostResponse(
-				post.getId(),
-				post.getTitle(),
-				post.getContent(),
-				post.getUser().getName()
-			))
+				post -> response.add(new SimplePostResponse(
+						post.getId(),
+						post.getTitle(),
+						post.getContent(),
+						post.getUser().getName()
+				))
 		);
 
 		return response;
+	}
+
+	public static List<SimplePostResponse> toPagePostResponses(List<Post> posts, int limit) {
+		List<SimplePostResponse> response = new ArrayList<>();
+
+		return posts.stream()
+				.limit(limit)
+				.map(post -> new SimplePostResponse(
+						post.getId(),
+						post.getTitle(),
+						post.getContent(),
+						post.getUser().getName()
+				))
+				.collect(Collectors.toList());
 	}
 
 	public static DeletePostResponse toDeletePostResponse() {

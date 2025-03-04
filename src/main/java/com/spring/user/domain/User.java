@@ -1,9 +1,6 @@
 package com.spring.user.domain;
 
-import static jakarta.persistence.EnumType.STRING;
-
 import com.spring.common.domain.TimeBaseEntity;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

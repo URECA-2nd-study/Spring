@@ -79,7 +79,7 @@ public class UserService {
 	}
 
 	public List<SimpleUserResponse> findUserByRole(String role) {
-		List<User> users = userRepository.findUserByRole(Role.of(role));
+		List<User> users = userRepository.findAllUsersByRole(Role.of(role));
 
 		return UserMapper.toSimpleUserResponses(users);
 	}
