@@ -19,7 +19,7 @@ public enum Role {
 
 	public static Role of(String role) {
 		return Arrays.stream(values())
-			.filter(r -> r.equals(role))
+			.filter(r -> r.role.equals(role))
 			.findAny()
 			.orElseThrow(() -> new BaseException(UserErrorCode.INVALID_ROLE));
 	}

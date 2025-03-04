@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring.user.dto.request.FilteredUsersRequest;
 import com.spring.user.dto.request.RegisterUserRequest;
 import com.spring.user.dto.request.UpdateUserRequest;
 import com.spring.user.dto.response.DeleteUserResponse;
@@ -73,4 +75,12 @@ public class UserController {
 	}
 
 	// 유저 역할 필터링 다건 조회
+	@GetMapping("/filter")
+	public ResponseEntity<List<SimpleUserResponse>> getFilteredUsers(
+		@RequestBody FilteredUsersRequest request) {
+		List<SimpleUserResponse> response = userService.getFilteredUsers(request);
+
+		return ResponseEntity.ok(response);
+	}
+
 }

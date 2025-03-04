@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.spring.post.dto.PostMapper;
@@ -17,6 +18,7 @@ import com.spring.post.dto.request.DeletePostRequest;
 import com.spring.post.dto.request.RegisterPostRequest;
 import com.spring.post.dto.request.UpdatePostRequest;
 import com.spring.post.dto.response.DeletePostResponse;
+import com.spring.post.dto.response.NoOffsetPostResponse;
 import com.spring.post.dto.response.SimplePostResponse;
 import com.spring.post.service.PostService;
 
@@ -68,5 +70,11 @@ public class PostController {
 		return ResponseEntity.ok(response);
 	}
 
+	@GetMapping
+	public ResponseEntity<NoOffsetPostResponse> getPostsWithNoOffset(
+		@RequestParam(value = "lastPostId", required = false) Long lastPostId) {
+		NoOffsetPostResponse response = postService.getPostsWithNoOffset(lastPostId);
 
+		return ResponseEntity.ok(response);
+	}
 }
