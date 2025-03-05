@@ -9,16 +9,28 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-public class B {
-    @Autowired private UserService userService;
+public class UserServiceB {
+    private final UserService userService;
 
+    @Autowired
+    public UserServiceB(UserService userService) {
+        this.userService = userService;
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void requiredB(RegisterUserRequest request){
+        methodB(request);
+    }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
-    public void b(RegisterUserRequest request2){
+    public void requiresNewB(RegisterUserRequest request){
+        methodB(request);
+    }
+
+    private void methodB(RegisterUserRequest request){
         try {
-            userService.joinUser(request2);
-            SimpleUserRequest request = null;
-            userService.getUser(request);
+            userService.joinUser(request);
+            userService.getUser(null);
         } catch (NullPointerException e) {
             throw new NullPointerException();
         }
