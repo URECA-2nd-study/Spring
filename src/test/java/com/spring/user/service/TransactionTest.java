@@ -75,5 +75,4 @@ public class TransactionTest {
         // 예외 메시지 확인
         assertTrue(exception instanceof IllegalTransactionStateException);
     }
-
 }

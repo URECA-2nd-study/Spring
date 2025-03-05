@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.math.BigDecimal;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -39,12 +40,16 @@ public class User extends TimeBaseEntity {
 	@Column(name = "role", nullable = false)
 	private Role role;
 
+	@Column(name = "point", nullable = false)
+	private BigDecimal point;
+
 	@Builder(access = AccessLevel.PRIVATE)
-	private User(String email, String password, String name, Role role) {
+	private User(String email, String password, String name, Role role, BigDecimal point) {
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.role =role;
+		this.point = point;
 	}
 
 	public static User of(String email, String password, String name, Role role) {
@@ -56,9 +61,23 @@ public class User extends TimeBaseEntity {
 			.build();
 	}
 
+	public static User of(String email, String password, String name, Role role, BigDecimal point) {
+		return User.builder()
+				.email(email)
+				.password(password)
+				.name(name)
+				.role(role)
+				.point(point)
+				.build();
+	}
+
 	public void updateInfo(String email, String name, String role) {
 		this.email = email;
 		this.name = name;
 		this.role = Role.of(role);
+	}
+
+	public void increasePoint(BigDecimal amount) {
+		this.point = this.point.add(amount);
 	}
 }

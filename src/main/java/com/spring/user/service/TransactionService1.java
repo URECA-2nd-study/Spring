@@ -2,9 +2,11 @@ package com.spring.user.service;
 
 import com.spring.user.domain.User;
 import com.spring.user.repository.UserRepository;
+import java.math.BigDecimal;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
@@ -44,5 +46,34 @@ public class TransactionService1 {
 
         user.updateInfo("e2", "n2", "어드민"); // 값 업데이트
         transactionService2.testMandatorydB(); // 예외 발생
+    }
+
+
+    @Transactional(isolation = Isolation.READ_UNCOMMITTED)
+    public void addPointReadUncommitted(Long userId, BigDecimal amount)  {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.increasePoint(amount);
+    }
+
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public void addPointRepeatableRead(Long userId, BigDecimal amount)  {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.increasePoint(amount);
+    }
+
+    @Transactional(isolation = Isolation.SERIALIZABLE)
+    public void addPointSerializable(Long userId, BigDecimal amount)  {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.increasePoint(amount);
+    }
+
+    @Transactional(isolation = Isolation.READ_COMMITTED)
+    public void addPointReadCommitted(Long userId, BigDecimal amount)  {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        user.increasePoint(amount);
     }
 }
