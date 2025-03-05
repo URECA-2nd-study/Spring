@@ -18,6 +18,7 @@ import com.spring.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -99,5 +100,21 @@ public class PostService {
 		return postRepository.findById(postId).orElseThrow(
 			() -> new BaseException(PostErrorCode.NOT_FOUND_POST)
 		);
+	}
+
+	// 자식 메소드: A의 포스트를 자동 생성
+	@Transactional
+	public void testRequiredB(Long userId) {
+		User findUser = getUser(userId);
+		Post savedPost = postRepository.save(PostMapper.toPost("A joined in", "Say hello to A!", findUser));
+		throw new RuntimeException();
+    }
+
+	// 자식 메소드: A의 포스트를 자동 생성
+	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	public void testRequiresNewB(Long userId) {
+		User findUser = getUser(userId);
+		Post savedPost = postRepository.save(PostMapper.toPost("A joined in", "Say hello to A!", findUser));
+		throw new RuntimeException();
 	}
 }

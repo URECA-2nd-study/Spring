@@ -1,6 +1,7 @@
 package com.spring.user.service;
 
 import com.spring.common.exception.runtime.BaseException;
+import com.spring.post.service.PostService;
 import com.spring.user.domain.Role;
 import com.spring.user.domain.User;
 import com.spring.user.dto.UserMapper;
@@ -24,6 +25,7 @@ import java.util.List;
 public class UserService {
 
 	private final UserRepository userRepository;
+	private final PostService postService;
 
 	@Transactional(readOnly = true)
 	public SimpleUserResponse getUser(SimpleUserRequest request) {
@@ -83,4 +85,39 @@ public class UserService {
 
 		return UserMapper.toSimpleUserListResponse(findUserAll);
 	}
+
+	// Required - 부모 트랜젝션 : 유저 저장 후 자동 포스트 생성
+	@Transactional
+	public RegisterUserResponse testRequiredA(RegisterUserRequest request) {
+		// 유저를 저장
+		User savedUser = userRepository.save(UserMapper.toUser(request));
+
+		// 유저와 관련된 기본 post까지 저장
+		try {
+			postService.testRequiredB(savedUser.getId());
+			System.out.println("생성 성공");
+		} catch (Exception e) {
+			System.out.println("POST ERROR");
+		}
+
+		return UserMapper.toRegisterUserResponse(savedUser);
+	}
+
+	// Requires_new - 부모 트랜젝션 : 유저 저장 후 자동 포스트 생성
+	@Transactional
+	public RegisterUserResponse testRequiresNewA(RegisterUserRequest request) {
+		// 유저를 저장
+		User savedUser = userRepository.save(UserMapper.toUser(request));
+
+		// 유저와 관련된 기본 post까지 저장
+		try {
+			postService.testRequiresNewB(savedUser.getId());
+			System.out.println("생성 성공");
+		} catch (Exception e) {
+			System.out.println("POST ERROR");
+		}
+
+		return UserMapper.toRegisterUserResponse(savedUser);
+	}
+
 }
