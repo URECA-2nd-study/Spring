@@ -2,6 +2,7 @@ package com.spring.post.controller;
 
 import java.util.List;
 
+import com.spring.post.domain.Post;
 import com.spring.post.dto.request.SimplePostRequest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

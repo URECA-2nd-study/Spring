@@ -6,5 +6,5 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
 public interface PostRepositoryCustom{
-    Slice<SimplePostResponse> searchPostPages(Long lastPostId, Pageable pageable);
+    Slice<Post> searchPostPages(Long lastPostId, Pageable pageable);
 }

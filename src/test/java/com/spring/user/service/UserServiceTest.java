@@ -2,15 +2,12 @@ package com.spring.user.service;
 
 import com.spring.user.dto.request.RegisterUserRequest;
 import com.spring.user.dto.request.SimpleUserRequest;
-import com.spring.user.repository.UserRepository;
-import com.spring.user.service.transaction.UserServiceA;
-import org.junit.jupiter.api.AfterAll;
+import com.spring.user.service.transactionpropagation.UserServiceA;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest

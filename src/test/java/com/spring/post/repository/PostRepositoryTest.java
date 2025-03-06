@@ -54,7 +54,7 @@ public class PostRepositoryTest extends JpaConfig {
     public void testSearchPostPages() {
         Long lastPostId = 60L;
         Pageable pageable = PageRequest.of(60, 10);
-        Slice<SimplePostResponse> result = postRepository.searchPostPages(lastPostId, pageable);
+        Slice<Post> result = postRepository.searchPostPages(lastPostId, pageable);
 
         assertThat(result).isNotNull();
         assertThat(result.getContent()).hasSize(10);

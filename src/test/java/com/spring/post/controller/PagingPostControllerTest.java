@@ -1,5 +1,6 @@
 package com.spring.post.controller;
 
+import com.spring.post.domain.Post;
 import com.spring.post.dto.response.SimplePostResponse;
 import com.spring.post.repository.PostRepository;
 import com.spring.post.service.PostService;

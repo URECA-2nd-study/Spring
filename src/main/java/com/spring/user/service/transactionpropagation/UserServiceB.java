@@ -1,7 +1,6 @@
-package com.spring.user.service.transaction;
+package com.spring.user.service.transactionpropagation;
 
 import com.spring.user.dto.request.RegisterUserRequest;
-import com.spring.user.dto.request.SimpleUserRequest;
 import com.spring.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -31,16 +31,11 @@ public class PostRepositoryImpl implements PostRepositoryCustom {
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Slice<SimplePostResponse> searchPostPages(Long lastPostId, Pageable pageable) {
+    public Slice<Post> searchPostPages(Long lastPostId, Pageable pageable) {
         BooleanExpression whereCondition = (lastPostId != null) ? post.id.lt(lastPostId) : null;
 
-        List<SimplePostResponse> results = queryFactory
-                .select(Projections.fields(SimplePostResponse.class,
-                        post.id,
-                        post.title,
-                        post.content,
-                        post.user
-                ))
+        List<Post> results = queryFactory
+                .select(post)
                 .from(post)
                 .where(whereCondition)
                 .orderBy(post.id.desc())

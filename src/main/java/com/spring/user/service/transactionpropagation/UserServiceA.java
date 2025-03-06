@@ -1,4 +1,4 @@
-package com.spring.user.service.transaction;
+package com.spring.user.service.transactionpropagation;
 
 import com.spring.user.dto.request.RegisterUserRequest;
 import com.spring.user.service.UserService;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,7 +97,14 @@ public class PostService {
 	}
 
 	public Slice<SimplePostResponse> getPostSlice(Long postId, Pageable pageable) {
-		return postRepository.searchPostPages(postId, pageable);
+		// 1. postRepository에서 페이징된 Post 목록을 가져옴
+		Slice<Post> posts = postRepository.searchPostPages(postId, pageable);
+
+		// 2. Post 엔티티를 SimplePostResponse DTO로 변환
+		Slice<SimplePostResponse> postResponses = posts.map(post -> PostMapper.toSimplePostResponse(post,post.getUser().getName()));
+
+		return postResponses;
 	}
+
 
 }

@@ -13,6 +13,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "Users")
 @Getter
@@ -36,20 +38,34 @@ public class User extends TimeBaseEntity {
 	@Column(name = "role", nullable = false)
 	private Role role;
 
+	@Column(name = "point", nullable = false)
+	private BigDecimal point;
+
 	@Builder(access = AccessLevel.PRIVATE)
-	private User(String email, String password, String name, Role role) {
+	private User(String email, String password, String name, Role role, BigDecimal point) {
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.role =role;
+		this.point = point;
 	}
 
 	public static User of(String email, String password, String name, Role role) {
+		return User.builder()
+				.email(email)
+				.password(password)
+				.name(name)
+				.role(role)
+				.build();
+	}
+
+	public static User of(String email, String password, String name, Role role, BigDecimal point) {
 		return User.builder()
 			.email(email)
 			.password(password)
 			.name(name)
 			.role(role)
+			.point(point)
 			.build();
 	}
 
@@ -58,4 +74,15 @@ public class User extends TimeBaseEntity {
 		this.name = name;
 		this.role = Role.of(role);
 	}
+	public void updateInfo(String email, String name, BigDecimal point) {
+		this.email = email;
+		this.name = name;
+		this.point = point;
+	}
+
+	public void increasePoint(BigDecimal point) {
+		this.point = this.point.add(point);
+	}
 }
+
+//point 필드를 만들고 고립4단계를 쓰레드 코드를 이용해 각 고립 단계에 따른 성공률을 구한다.
