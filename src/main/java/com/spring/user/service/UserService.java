@@ -1,11 +1,14 @@
 package com.spring.user.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.common.exception.runtime.BaseException;
+import com.spring.user.domain.Role;
 import com.spring.user.dto.request.FilteredUsersRequest;
 import com.spring.user.dto.request.RegisterUserRequest;
 import com.spring.user.dto.request.UpdateUserRequest;
@@ -19,12 +22,15 @@ import com.spring.user.exception.UserErrorCode;
 import com.spring.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 
 	private final UserRepository userRepository;
+	private final UserTransactionService userTransactionService;
 
 	@Transactional(readOnly = true)
 	public SimpleUserResponse getUser(SimpleUserRequest request) {
@@ -80,5 +86,37 @@ public class UserService {
 
 	public List<SimpleUserResponse> getFilteredUsers(FilteredUsersRequest request) {
 		return userRepository.getFilteredUsers(request.role());
+	}
+
+	@Transactional
+	public void requiredA() {
+		userRepository.save(User.of("required@naver.com", "1234", "김트랜", Role.MEMBER));
+		try {
+			userTransactionService.requiredB();
+		} catch (BaseException e) {
+			log.info("예외 잡기");
+		}
+	}
+
+	@Transactional
+	public void requiredNewA() {
+		User savedUser = userRepository.save(User.of("required3@naver.com", "1234", "김트랜3", Role.MEMBER));
+
+		List<User> userAll = userRepository.findAll();
+
+		userTransactionService.requiredNewB();
+
+		throw new BaseException(UserErrorCode.DUPLICATED_EMAIL);
+	}
+
+	public void mandatoryAWithNonTransaction() {
+		User savedUser = userRepository.save(User.of("required5@naver.com", "1234", "김트랜5", Role.MEMBER));
+		userTransactionService.mandatoryBNonTransaction();
+	}
+
+	@Transactional
+	public void mandatoryAWithTransaction() {
+		User savedUser = userRepository.save(User.of("required7@naver.com", "1234", "김트랜7", Role.MEMBER));
+		userTransactionService.mandatoryBTransaction();
 	}
 }
