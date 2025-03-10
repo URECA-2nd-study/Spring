@@ -6,6 +6,8 @@ import com.spring.post.dto.response.PagePostResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.spring.common.exception.runtime.BaseException;
@@ -103,4 +105,30 @@ public class PostService {
 			() -> new BaseException(PostErrorCode.NOT_FOUND_POST)
 		);
 	}
+
+	//B method
+	@Transactional
+	public void savePostFail(RegisterPostRequest request){
+		User findUser = getUser(request.userId());
+		Post savedPost = postRepository.save(PostMapper.toPost(request.title(), request.content(), findUser));
+		throw new RuntimeException();
+	}
+
+	//B method - REQUIRES NEW
+	@Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.READ_UNCOMMITTED)
+	public void savePostFailwithRequiredNew(RegisterPostRequest request){
+		User findUser = getUser(request.userId());
+		Post savedPost = postRepository.save(PostMapper.toPost(request.title(), request.content(), findUser));
+	}
+
+	//B method - Mandatory
+	@Transactional(propagation = Propagation.MANDATORY)
+	public void savePostFailwithMandatory(RegisterPostRequest request){
+		User findUser = getUser(request.userId());
+		Post savedPost = postRepository.save(PostMapper.toPost(request.title(), request.content(), findUser));
+	}
+
+
+
+
 }

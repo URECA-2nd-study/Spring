@@ -6,6 +6,7 @@ import com.spring.post.dto.response.PagePostResponse;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import com.spring.post.dto.PostMapper;
