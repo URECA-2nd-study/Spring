@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.spring.fixture.UserFixture;
 import com.spring.user.domain.Role;
 import com.spring.user.domain.User;
 import com.spring.user.repository.UserRepository;
@@ -15,7 +16,7 @@ import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.transaction.IllegalTransactionStateException;
 
 @SpringBootTest
-public class TransactionTest {
+public class TransactionPropagationTest {
 
     @Autowired
     private TransactionService1 transactionService1;
@@ -27,7 +28,7 @@ public class TransactionTest {
     @DisplayName("REQUIRED 전파는 상위 메소드를 롤백시킨다")
     public void testTransactionRollback(){
         // given
-        User initialUser = User.of("e1", "p1", "n1", Role.MEMBER);
+        User initialUser = UserFixture.createUser("e1", "p1", "n1", Role.MEMBER);
         ReflectionTestUtils.setField(initialUser, "id", 1L);
         userRepository.save(initialUser);
 
@@ -49,7 +50,7 @@ public class TransactionTest {
     @DisplayName("REQUIRES_NEW 전파는 상위 메소드를 롤백시키지 않는다")
     public void testRequiresNewRollback() {
         // given
-        User initialUser = User.of("e1", "p1", "n1", Role.MEMBER);
+        User initialUser = UserFixture.createUser("e1", "p1", "n1", Role.MEMBER);
         ReflectionTestUtils.setField(initialUser, "id", 1L);
         userRepository.save(initialUser);
 
