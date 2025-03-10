@@ -58,6 +58,7 @@ public class User extends TimeBaseEntity {
 			.password(password)
 			.name(name)
 			.role(role)
+			.point(BigDecimal.ZERO)
 			.build();
 	}
 
