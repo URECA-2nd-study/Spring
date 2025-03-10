@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import net.datafaker.Faker;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,10 @@ public class UserFixture {
     //유저 생성자
     public static User createUser(String email, String password, String name, Role role){
         return User.of(email, password, name, role);
+    }
+
+    public static User createUser(String email, String password, String name, Role role, BigDecimal point){
+        return User.of(email, password, name, role,point);
     }
 
     //랜덤 유저 만들기

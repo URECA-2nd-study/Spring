@@ -8,6 +8,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 import static jakarta.persistence.EnumType.STRING;
 
 @Entity
@@ -34,12 +36,26 @@ public class User extends TimeBaseEntity {
 	@Column(name = "role", nullable = false)
 	private Role role;
 
+	@Column(name = "point", nullable = true)
+	private BigDecimal point;
+
 	@Builder(access = AccessLevel.PRIVATE)
-	private User(String email, String password, String name, Role role) {
+	private User(String email, String password, String name, Role role, BigDecimal point) {
 		this.email = email;
 		this.password = password;
 		this.name = name;
 		this.role =role;
+		this.point = point;
+	}
+
+	public static User of(String email, String password, String name, Role role, BigDecimal point) {
+		return User.builder()
+				.email(email)
+				.password(password)
+				.name(name)
+				.role(role)
+				.point(point)
+				.build();
 	}
 
 	public static User of(String email, String password, String name, Role role) {
@@ -55,5 +71,9 @@ public class User extends TimeBaseEntity {
 		this.email = email;
 		this.name = name;
 		this.role = Role.of(role);
+	}
+
+	public void updatePoint(BigDecimal point){
+		this.point = this.point.add(point);
 	}
 }
