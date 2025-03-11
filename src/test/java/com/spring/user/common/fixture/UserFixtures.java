@@ -3,6 +3,7 @@ package com.spring.user.common.fixture;
 import com.spring.user.domain.Role;
 import com.spring.user.domain.User;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,5 +23,9 @@ public class UserFixtures {
 
     public static User createUser() {
         return User.of("abc@naver.com", "abc1234", "ABC", Role.MEMBER);
+    }
+
+    public static User createUserWithPoint() {
+        return User.of("abc@naver.com", "abc1234", "ABC", Role.MEMBER, BigDecimal.ZERO);
     }
 }

@@ -16,8 +16,10 @@ import com.spring.user.exception.UserErrorCode;
 import com.spring.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Service
@@ -119,5 +121,30 @@ public class UserService {
 
 		return UserMapper.toRegisterUserResponse(savedUser);
 	}
+
+	@Transactional(isolation = Isolation.READ_UNCOMMITTED)
+	public void changePointReadUncommitted(Long id, BigDecimal point) throws InterruptedException {
+		User user = findUser(id);
+		user.updatePoint(user.getPoint().add(point));
+	}
+
+	@Transactional(isolation = Isolation.READ_COMMITTED)
+	public void changePointReadCommitted(Long id, BigDecimal point) throws InterruptedException {
+		User user = findUser(id);
+		user.updatePoint(user.getPoint().add(point));
+	}
+
+	@Transactional(isolation = Isolation.REPEATABLE_READ)
+	public void changePointRepeatableRead(Long id, BigDecimal point) throws InterruptedException {
+		User user = findUser(id);
+		user.updatePoint(user.getPoint().add(point));
+	}
+
+	@Transactional(isolation = Isolation.SERIALIZABLE)
+	public void changePointSerializable(Long id, BigDecimal point) throws InterruptedException {
+		User user = findUser(id);
+		user.updatePoint(user.getPoint().add(point));
+	}
+
 
 }
